@@ -21,7 +21,7 @@ ARunningMan::ARunningMan()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
 	GetCharacterMovement()->JumpZVelocity = 500.0f;
-	GetCharacterMovement()->AirControl = 0.5f;
+	GetCharacterMovement()->AirControl = 1.5f;
 
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
