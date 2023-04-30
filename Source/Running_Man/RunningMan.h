@@ -41,6 +41,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float Power;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int32 Score;
+
 	UPROPERTY(EditAnywhere)
 		float Power_Threshold;
 

@@ -35,7 +35,8 @@ ARunningMan::ARunningMan()
 
 	bDead = false;
 	Power = 100.0f;
-
+	Score = 0;
+	Power_Threshold = 3.0f;
 }
 
 // Called when the game starts or when spawned
@@ -132,6 +133,11 @@ void ARunningMan::OnBeginOverlap(UPrimitiveComponent* HitComp,
 
 
 		Power += 10.0f;
+		Score += 1;
+
+		if (Score % 20 == 0) {
+			Power_Threshold += 1.0f;
+		}
 
 		if (Power > 100.0f)
 			Power = 100.0f;
