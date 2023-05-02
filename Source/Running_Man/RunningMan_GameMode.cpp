@@ -28,8 +28,6 @@ void ARunningMan_GameMode::Tick(float DeltaTime) {
 
 	Super::Tick(DeltaTime);
 
-
-
 }
 
 void ARunningMan_GameMode::SpawnPlayerRecharge()
