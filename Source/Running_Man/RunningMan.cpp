@@ -47,15 +47,16 @@ void ARunningMan::BeginPlay()
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ARunningMan::OnBeginOverlap);
 	
 	if (Player_Power_Widget_Class != nullptr) {
-
+		
 		Player_Power_Widget = CreateWidget(GetWorld(), Player_Power_Widget_Class);
 		Player_Power_Widget->AddToViewport();
+		
 	}
 }
 
 // Called every frame
 void ARunningMan::Tick(float DeltaTime)
-{
+{	
 	Super::Tick(DeltaTime);
 
 	Power -= DeltaTime * Power_Threshold;
@@ -63,19 +64,16 @@ void ARunningMan::Tick(float DeltaTime)
 	if (Power <= 0) {
 
 		if (!bDead) {
-
+			
 			bDead = true;
 
 			GetMesh()->SetSimulatePhysics(true);
 
 			FTimerHandle UnusedHandle;
-			GetWorldTimerManager().SetTimer(
-				UnusedHandle, this, &ARunningMan::RestartGame, 3.0f, false);
-
+			GetWorldTimerManager().SetTimer(UnusedHandle, this, &ARunningMan::RestartGame, 3.0f, false);
+			
 		}
-
 	}
-
 }
 
 // Called to bind functionality to input
@@ -96,65 +94,64 @@ void ARunningMan::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void ARunningMan::MoveForward(float Axis)
 {
-
 	if (!bDead) {
-
+		
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Axis);
-
+		
 	}
-
+	
 }
 
 void ARunningMan::MoveRight(float Axis) {
-
+	
 	if (!bDead) {
-
+		
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		AddMovementInput(Direction, Axis);
-
+		
 	}
-
+	
 }
+
 
 
 void ARunningMan::OnBeginOverlap(UPrimitiveComponent* HitComp,
 	AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 	bool bFromSweep, const FHitResult& SweepResult)
 {
-
+	
 	if (OtherActor->ActorHasTag("Recharge")) {
-
 
 		Power += 10.0f;
 		Score += 1;
 
 		if (Score % 20 == 0) {
+			
 			Power_Threshold += 1.0f;
+			
 		}
 
-		if (Power > 100.0f)
+		if (Power > 100.0f) {
+			
 			Power = 100.0f;
-
+		}
 
 		OtherActor->Destroy();
-
-
+		
 	}
-
+	
 }
 
 void ARunningMan::RestartGame()
 {
-
-
+	
 	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
-
-
+	
 }
